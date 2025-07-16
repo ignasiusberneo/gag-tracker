@@ -105,7 +105,7 @@ export default function Home() {
                 "alieninvasion",
               ];
               const filteredWeather = activeWeather.filter((weather) =>
-                specialWeather.includes(weather.item_id)
+                specialWeather.includes(weather.weather_id)
               );
               if (filteredWeather.length > 0) {
                 playSound();
