@@ -53,6 +53,10 @@ export default function Home() {
               "sugar_apple",
               "burning_bud",
               "giant_pinecone",
+              "cacao",
+              "pepper",
+              "mushroom",
+              "grape",
             ];
             const filteredStocks = data.seed_stock.filter(
               (stock) => specialStock.includes(stock.item_id) // 🛠 FIXED from data.seed_stock.item_id
@@ -78,7 +82,34 @@ export default function Home() {
               (weather) => weather.active
             );
             if (activeWeather.length > 0) {
-              playSound();
+              const specialWeather = [
+                "disco",
+                "auroraborealis",
+                "beenado",
+                "beestorm",
+                "beeswarm",
+                "heatwave",
+                "jandelfloat",
+                "jandelzombie",
+                "jandelstorm",
+                "meteorshower",
+                "meteorstrike",
+                "solarflare",
+                "spacetravel",
+                "sungod",
+                "thunderstorm",
+                "volcano",
+                "workingbeeswarm",
+                "frost",
+                "blackhole",
+                "alieninvasion",
+              ];
+              const filteredWeather = activeWeather.filter((weather) =>
+                specialWeather.includes(weather.item_id)
+              );
+              if (filteredWeather.length > 0) {
+                playSound();
+              }
               setWeather(activeWeather[0].weather_name);
             } else {
               setWeather("Clear");
