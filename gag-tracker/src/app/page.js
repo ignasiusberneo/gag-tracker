@@ -6,8 +6,15 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 
 export default function Home() {
   const [stocks, setStocks] = useState([]);
+  const [tools, setTools] = useState([]);
   const [weather, setWeather] = useState("");
   const [enabled, setEnabled] = useState(false);
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const unixMillis = Date.now();
+    setUserId(unixMillis.toString());
+  }, []);
 
   useEffect(() => {
     if (!enabled) return;
@@ -16,7 +23,6 @@ export default function Home() {
     let reconnectTimeout;
 
     const connectWebSocket = () => {
-      const userId = "neo0519";
       ws = new WebSocket(
         `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
           userId
@@ -52,6 +58,17 @@ export default function Home() {
               (stock) => specialStock.includes(stock.item_id) // 🛠 FIXED from data.seed_stock.item_id
             );
             if (filteredStocks.length > 0) {
+              playSound();
+            }
+          }
+
+          if (data.gear_stock) {
+            setTools(data.gear_stock);
+            const specialTools = ["godly_sprinkler", "master_sprinkler"];
+            const filteredTools = data.gear_stock.filter(
+              (tool) => specialTools.includes(tool.item_id) // 🛠 FIXED from data.gear_stock.item_id
+            );
+            if (filteredTools.length > 0) {
               playSound();
             }
           }
@@ -152,6 +169,46 @@ export default function Home() {
                     </Typography>
                     <Typography variant="body2" align="center">
                       x{stock.quantity}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
+            gap={2}
+            border={"1px solid white"}
+            borderRadius={4}
+            p={2}
+            mt={2}
+          >
+            <Typography variant="h5">Available Gears</Typography>
+            <Grid container spacing={5} justifyContent={"center"}>
+              {tools.map((tool) => (
+                <Grid
+                  size={2}
+                  key={tool.item_id}
+                  style={{ textAlign: "center" }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <img
+                      src={tool.icon}
+                      alt={tool.display_name}
+                      style={{ width: 60, height: 60 }}
+                    />
+                    <Typography variant="subtitle2" align="center">
+                      {tool.display_name}
+                    </Typography>
+                    <Typography variant="body2" align="center">
+                      x{tool.quantity}
                     </Typography>
                   </Box>
                 </Grid>
