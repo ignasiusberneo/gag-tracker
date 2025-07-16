@@ -11,71 +11,84 @@ export default function Home() {
 
   useEffect(() => {
     if (!enabled) return;
-    const userId = "neo0519";
-    const ws = new WebSocket(
-      `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
-        userId
-      )}`
-    );
 
-    const playSound = () => {
-      const audio = new Audio("/sounds/notification.mp3");
-      audio.play().catch((err) => {
-        console.warn("Autoplay blocked:", err);
-      });
-    };
+    let ws;
+    let reconnectTimeout;
 
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
+    const connectWebSocket = () => {
+      const userId = "neo0519";
+      ws = new WebSocket(
+        `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
+          userId
+        )}`
+      );
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        console.log("Parsed Data:", data);
+      const playSound = () => {
+        const audio = new Audio("/sounds/notification.mp3");
+        audio.play().catch((err) => {
+          console.warn("Autoplay blocked:", err);
+        });
+      };
 
-        if (data.seed_stock) {
-          setStocks(data.seed_stock);
-          const specialStock = [
-            "beanstalk",
-            "ember_lily",
-            "sugar_apple",
-            "burning_bud",
-            "giant_pinecone",
-          ];
-          const filteredStocks = data.seed_stock.filter((stock) =>
-            specialStock.includes(data.seed_stock.item_id)
-          );
-          if (filteredStocks.length > 0) {
-            playSound();
+      ws.onopen = () => {
+        console.log("WebSocket connected");
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log("Parsed Data:", data);
+
+          if (data.seed_stock) {
+            setStocks(data.seed_stock);
+            const specialStock = [
+              "beanstalk",
+              "ember_lily",
+              "sugar_apple",
+              "burning_bud",
+              "giant_pinecone",
+            ];
+            const filteredStocks = data.seed_stock.filter(
+              (stock) => specialStock.includes(stock.item_id) // 🛠 FIXED from data.seed_stock.item_id
+            );
+            if (filteredStocks.length > 0) {
+              playSound();
+            }
           }
-        }
-        if (data.weather) {
-          const activeWeather = data.weather.filter(
-            (weather) => weather.active
-          );
-          if (activeWeather.length > 0) {
-            playSound();
-            setWeather(activeWeather[0].weather_name);
-          } else {
-            setWeather("Clear");
+
+          if (data.weather) {
+            const activeWeather = data.weather.filter(
+              (weather) => weather.active
+            );
+            if (activeWeather.length > 0) {
+              playSound();
+              setWeather(activeWeather[0].weather_name);
+            } else {
+              setWeather("Clear");
+            }
           }
+        } catch (error) {
+          console.error("Failed to parse WebSocket message:", error);
         }
-      } catch (error) {
-        console.error("Failed to parse WebSocket message:", error);
-      }
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket closed. Reconnecting in 5 seconds...");
+        reconnectTimeout = setTimeout(() => {
+          connectWebSocket(); // 🔁 Reconnect
+        }, 5000);
+      };
     };
 
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket closed");
-    };
+    connectWebSocket(); // Initial connection
 
     return () => {
       ws.close();
+      clearTimeout(reconnectTimeout); // Clean up reconnect timeout
     };
   }, [enabled]);
 
