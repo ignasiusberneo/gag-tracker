@@ -361,6 +361,7 @@ export default function Home() {
               textColor="inherit"
               indicatorColor="primary"
             >
+              <Tab label="All Stocks" />
               <Tab label="Seeds" />
               <Tab label="Gears" />
               <Tab label="Eggs" />
@@ -369,6 +370,115 @@ export default function Home() {
 
           {/* Tab Panels */}
           {tabIndex === 0 && (
+            <>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                gap={2}
+                border={"1px solid white"}
+                borderRadius={4}
+                p={2}
+                mb={2}
+              >
+                <Typography variant="h5">Available Seeds</Typography>
+                <Grid container spacing={5} justifyContent={"center"}>
+                  {stocks.map((stock) => (
+                    <Grid key={stock.item_id} size={{ xs: 6, sm: 3, md: 2 }}>
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={stock.icon}
+                          alt={stock.display_name}
+                          style={{ width: 60, height: 60 }}
+                        />
+                        <Typography variant="subtitle2" align="center">
+                          {stock.display_name}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          x{stock.quantity}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                gap={2}
+                border={"1px solid white"}
+                borderRadius={4}
+                p={2}
+                mb={2}
+              >
+                <Typography variant="h5">Available Seeds</Typography>
+                <Grid container spacing={5} justifyContent={"center"}>
+                  {stocks.map((stock) => (
+                    <Grid key={stock.item_id} size={{ xs: 6, sm: 3, md: 2 }}>
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={stock.icon}
+                          alt={stock.display_name}
+                          style={{ width: 60, height: 60 }}
+                        />
+                        <Typography variant="subtitle2" align="center">
+                          {stock.display_name}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          x{stock.quantity}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                gap={2}
+                border={"1px solid white"}
+                borderRadius={4}
+                p={2}
+              >
+                <Typography variant="h5">Available Eggs</Typography>
+                <Grid container spacing={15} justifyContent={"center"}>
+                  {eggStocks.map((egg) => (
+                    <Grid key={egg.item_id} size={{ xs: 6, sm: 3, md: 2 }}>
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <img
+                          src={egg.icon}
+                          alt={egg.display_name}
+                          style={{ width: 60, height: 60 }}
+                        />
+                        <Typography variant="subtitle2" align="center">
+                          {egg.display_name}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          x{egg.quantity}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            </>
+          )}
+
+          {tabIndex === 1 && (
             <Box
               display={"flex"}
               flexDirection={"column"}
@@ -405,7 +515,7 @@ export default function Home() {
             </Box>
           )}
 
-          {tabIndex === 1 && (
+          {tabIndex === 2 && (
             <Box
               display={"flex"}
               flexDirection={"column"}
@@ -442,7 +552,7 @@ export default function Home() {
             </Box>
           )}
 
-          {tabIndex === 2 && (
+          {tabIndex === 3 && (
             <Box
               display={"flex"}
               flexDirection={"column"}
