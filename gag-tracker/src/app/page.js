@@ -11,7 +11,6 @@ export default function Home() {
   const [eggStocks, setEggStock] = useState([]);
   const [tools, setTools] = useState([]);
   const [weather, setWeather] = useState([]);
-  const [lastSpecialWeatherIds, setLastSpecialWeatherIds] = useState([]);
   const [enabled, setEnabled] = useState(false);
   const [userId, setUserId] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
@@ -148,36 +147,40 @@ export default function Home() {
           }
 
           if (data.weather) {
-            const newWeathers = [...weather];
             const newlyActivatedSpecials = [];
 
-            data.weather.forEach((weatherUpdate) => {
-              const index = newWeathers.findIndex(
-                (w) => w.weather_id === weatherUpdate.weather_id
-              );
+            setWeather((prevWeathers) => {
+              const updatedWeathers = [...prevWeathers];
 
-              if (weatherUpdate.active) {
-                if (index === -1) {
-                  newWeathers.push(weatherUpdate);
-                  if (specialWeather.has(weatherUpdate.weather_id)) {
-                    newlyActivatedSpecials.push(weatherUpdate.weather_name);
+              data.weather.forEach((weatherUpdate) => {
+                const index = updatedWeathers.findIndex(
+                  (w) => w.weather_id === weatherUpdate.weather_id
+                );
+
+                if (weatherUpdate.active) {
+                  if (index === -1) {
+                    updatedWeathers.push(weatherUpdate);
+                    if (specialWeather.has(weatherUpdate.weather_id)) {
+                      newlyActivatedSpecials.push(weatherUpdate.weather_name);
+                    }
+                  }
+                } else {
+                  if (index !== -1) {
+                    updatedWeathers.splice(index, 1);
                   }
                 }
-              } else {
-                if (index !== -1) {
-                  newWeathers.splice(index, 1);
-                }
-              }
+              });
+
+              return updatedWeathers;
             });
 
-            setWeather(newWeathers);
-
+            // Trigger toast outside setState
             if (newlyActivatedSpecials.length > 0) {
-              setTimeout(() => {
-                newlyActivatedSpecials.forEach((name) => {
+              newlyActivatedSpecials.forEach((name) => {
+                setTimeout(() => {
                   playSound(`⚡ Special Weather: ${name}`);
-                });
-              }, 0);
+                }, 0);
+              });
             }
           }
         } catch (error) {
