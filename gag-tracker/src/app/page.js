@@ -230,8 +230,10 @@ export default function Home() {
             my={5}
           >
             <Typography variant="h5">Weather</Typography>
-            <Typography variant="h7">
-              {weather.length === 0 ? "-" : weather}
+            <Typography variant="body1">
+              {weather.length === 0
+                ? "-"
+                : weather.map((w) => w.weather_name).join(", ")}
             </Typography>
           </Box>
 
