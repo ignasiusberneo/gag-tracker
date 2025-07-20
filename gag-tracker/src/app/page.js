@@ -411,27 +411,26 @@ export default function Home() {
                 border={"1px solid white"}
                 borderRadius={4}
                 p={2}
-                mb={2}
               >
-                <Typography variant="h5">Available Seeds</Typography>
+                <Typography variant="h5">Available Gears</Typography>
                 <Grid container spacing={5} justifyContent={"center"}>
-                  {stocks.map((stock) => (
-                    <Grid key={stock.item_id} size={{ xs: 6, sm: 3, md: 2 }}>
+                  {tools.map((tool) => (
+                    <Grid key={tool.item_id} size={{ xs: 6, sm: 3, md: 2 }}>
                       <Box
                         display="flex"
                         flexDirection="column"
                         alignItems="center"
                       >
                         <img
-                          src={stock.icon}
-                          alt={stock.display_name}
+                          src={tool.icon}
+                          alt={tool.display_name}
                           style={{ width: 60, height: 60 }}
                         />
                         <Typography variant="subtitle2" align="center">
-                          {stock.display_name}
+                          {tool.display_name}
                         </Typography>
                         <Typography variant="body2" align="center">
-                          x{stock.quantity}
+                          x{tool.quantity}
                         </Typography>
                       </Box>
                     </Grid>
