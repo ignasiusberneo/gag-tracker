@@ -246,11 +246,7 @@ export default function Home() {
 
           if (data.gear_stock) {
             setTools(data.gear_stock);
-            const specialTools = [
-              "godly_sprinkler",
-              "master_sprinkler",
-              "advanced_sprinkler",
-            ];
+            const specialTools = ["godly_sprinkler", "master_sprinkler"];
             const filteredTools = data.gear_stock.filter((tool) =>
               specialTools.includes(tool.item_id)
             );
@@ -260,44 +256,59 @@ export default function Home() {
           }
 
           if (data.weather) {
-            const activeWeather = data.weather.filter(
-              (weather) => weather.active
-            );
-            if (activeWeather.length > 0) {
-              const specialWeather = [
-                "disco",
-                "auroraborealis",
-                "beenado",
-                "beestorm",
-                "beeswarm",
-                "heatwave",
-                "jandelfloat",
-                "jandelzombie",
-                "jandelstorm",
-                "meteorshower",
-                "meteorstrike",
-                "solarflare",
-                "spacetravel",
-                "sungod",
-                "thunderstorm",
-                "volcano",
-                "workingbeeswarm",
-                "frost",
-                "blackhole",
-                "alieninvasion",
-              ];
-              const filteredWeather = activeWeather.filter((weather) =>
-                specialWeather.includes(weather.weather_id)
-              );
-              if (filteredWeather.length > 0) {
-                playSound(
-                  `⚡ Special Weather: ${filteredWeather[0].weather_name}`
+            setWeather((prevWeatherList) => {
+              let updatedWeatherList = [...prevWeatherList];
+
+              data.weather.forEach((weatherUpdate) => {
+                const index = updatedWeatherList.findIndex(
+                  (w) => w.weather_id === weatherUpdate.weather_id
                 );
-              }
-              setWeather(activeWeather[0].weather_name);
-            } else {
-              setWeather("Clear");
-            }
+
+                if (weatherUpdate.active) {
+                  // Only add if not already present
+                  if (index === -1) {
+                    updatedWeatherList.push(weatherUpdate);
+
+                    const specialWeather = [
+                      "disco",
+                      "auroraborealis",
+                      "beenado",
+                      "beestorm",
+                      "beeswarm",
+                      "heatwave",
+                      "jandelfloat",
+                      "jandelzombie",
+                      "jandelstorm",
+                      "meteorshower",
+                      "meteorstrike",
+                      "solarflare",
+                      "spacetravel",
+                      "sungod",
+                      "thunderstorm",
+                      "volcano",
+                      "workingbeeswarm",
+                      "frost",
+                      "blackhole",
+                      "alieninvasion",
+                      "zenaura",
+                    ];
+
+                    if (specialWeather.includes(weatherUpdate.weather_id)) {
+                      playSound(
+                        `⚡ Special Weather: ${weatherUpdate.weather_name}`
+                      );
+                    }
+                  }
+                } else {
+                  // Remove if no longer active
+                  if (index !== -1) {
+                    updatedWeatherList.splice(index, 1);
+                  }
+                }
+              });
+
+              return updatedWeatherList;
+            });
           }
         } catch (error) {
           console.error("Failed to parse WebSocket message:", error);
@@ -349,7 +360,9 @@ export default function Home() {
             my={5}
           >
             <Typography variant="h5">Weather</Typography>
-            <Typography variant="h7">{weather}</Typography>
+            <Typography variant="h7">
+              {weather.length === 0 ? "-" : weather}
+            </Typography>
           </Box>
 
           {/* Tabs */}
