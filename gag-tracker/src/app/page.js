@@ -10,143 +10,35 @@ export default function Home() {
   const [stocks, setStocks] = useState([]);
   const [eggStocks, setEggStock] = useState([]);
   const [tools, setTools] = useState([]);
-  const [weather, setWeather] = useState("");
+  const [weather, setWeather] = useState([]);
+  const [lastSpecialWeatherIds, setLastSpecialWeatherIds] = useState([]);
   const [enabled, setEnabled] = useState(false);
   const [userId, setUserId] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
 
-  // const seedList = [
-  //   {
-  //     item_id: "carrot",
-  //     display_name: "Carrot",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/carrot",
-  //   },
-  //   {
-  //     item_id: "strawberry",
-  //     display_name: "Strawberry",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/strawberry",
-  //   },
-  //   {
-  //     item_id: "blueberry",
-  //     display_name: "Blueberry",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/blueberry",
-  //   },
-  //   {
-  //     item_id: "orange_tulip",
-  //     display_name: "Orange Tulip",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/orange_tulip",
-  //   },
-  //   {
-  //     item_id: "tomato",
-  //     display_name: "Tomato",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/tomato",
-  //   },
-  //   {
-  //     item_id: "corn",
-  //     display_name: "Corn",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/corn",
-  //   },
-  //   {
-  //     item_id: "daffodil",
-  //     display_name: "Daffodil",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/daffodil",
-  //   },
-  //   {
-  //     item_id: "watermelon",
-  //     display_name: "Watermelon",
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/watermelon",
-  //   },
-  //   {
-  //     item_id: "pumpkin",
-  //     display_name: "Pumpkin",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/pumpkin",
-  //   },
-  //   {
-  //     item_id: "apple",
-  //     display_name: "Apple",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/apple",
-  //   },
-  //   {
-  //     item_id: "bamboo",
-  //     display_name: "Bamboo",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/bamboo",
-  //   },
-  //   {
-  //     item_id: "coconut",
-  //     display_name: "Coconut",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/coconut",
-  //   },
-  //   {
-  //     item_id: "cactus",
-  //     display_name: "Cactus",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/cactus",
-  //   },
-  //   {
-  //     item_id: "dragon_fruit",
-  //     display_name: "Dragon Fruit",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/dragon_fruit",
-  //   },
-  //   {
-  //     item_id: "mango",
-  //     display_name: "Mango",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/mango",
-  //   },
-  //   {
-  //     item_id: "grape",
-  //     display_name: "Grape",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/grape",
-  //   },
-  //   {
-  //     item_id: "mushroom",
-  //     display_name: "Mushroom",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/mushroom",
-  //   },
-  //   {
-  //     item_id: "pepper",
-  //     display_name: "Pepper",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/pepper",
-  //   },
-  //   {
-  //     item_id: "cacao",
-  //     display_name: "Cacao",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/cacao",
-  //   },
-  //   {
-  //     item_id: "beanstalk",
-  //     display_name: "Beanstalk",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/beanstalk",
-  //   },
-  //   {
-  //     item_id: "ember_lily",
-  //     display_name: "Ember Lily",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/ember_lily",
-  //   },
-  //   {
-  //     item_id: "burning_bud",
-  //     display_name: "Burning Bud",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/burning_bud",
-  //   },
-  //   {
-  //     item_id: "giant_pinecone",
-  //     display_name: "Giant Pinecone",
-
-  //     icon: "https://api.joshlei.com/v2/growagarden/image/giant_pinecone",
-  //   },
-  // ];
+  const specialWeather = new Set([
+    "disco",
+    "auroraborealis",
+    "beenado",
+    "beestorm",
+    "beeswarm",
+    "heatwave",
+    "jandelfloat",
+    "jandelzombie",
+    "jandelstorm",
+    "meteorshower",
+    "meteorstrike",
+    "solarflare",
+    "spacetravel",
+    "sungod",
+    "thunderstorm",
+    "volcano",
+    "workingbeeswarm",
+    "frost",
+    "blackhole",
+    "alieninvasion",
+    "zenaura",
+  ]);
 
   useEffect(() => {
     const unixMillis = Date.now();
@@ -256,59 +148,37 @@ export default function Home() {
           }
 
           if (data.weather) {
-            setWeather((prevWeatherList) => {
-              let updatedWeatherList = [...prevWeatherList];
+            const newWeathers = [...weather];
+            const newlyActivatedSpecials = [];
 
-              data.weather.forEach((weatherUpdate) => {
-                const index = updatedWeatherList.findIndex(
-                  (w) => w.weather_id === weatherUpdate.weather_id
-                );
+            data.weather.forEach((weatherUpdate) => {
+              const index = newWeathers.findIndex(
+                (w) => w.weather_id === weatherUpdate.weather_id
+              );
 
-                if (weatherUpdate.active) {
-                  // Only add if not already present
-                  if (index === -1) {
-                    updatedWeatherList.push(weatherUpdate);
-
-                    const specialWeather = [
-                      "disco",
-                      "auroraborealis",
-                      "beenado",
-                      "beestorm",
-                      "beeswarm",
-                      "heatwave",
-                      "jandelfloat",
-                      "jandelzombie",
-                      "jandelstorm",
-                      "meteorshower",
-                      "meteorstrike",
-                      "solarflare",
-                      "spacetravel",
-                      "sungod",
-                      "thunderstorm",
-                      "volcano",
-                      "workingbeeswarm",
-                      "frost",
-                      "blackhole",
-                      "alieninvasion",
-                      "zenaura",
-                    ];
-
-                    if (specialWeather.includes(weatherUpdate.weather_id)) {
-                      playSound(
-                        `⚡ Special Weather: ${weatherUpdate.weather_name}`
-                      );
-                    }
-                  }
-                } else {
-                  // Remove if no longer active
-                  if (index !== -1) {
-                    updatedWeatherList.splice(index, 1);
+              if (weatherUpdate.active) {
+                if (index === -1) {
+                  newWeathers.push(weatherUpdate);
+                  if (specialWeather.has(weatherUpdate.weather_id)) {
+                    newlyActivatedSpecials.push(weatherUpdate.weather_name);
                   }
                 }
-              });
-
-              return updatedWeatherList;
+              } else {
+                if (index !== -1) {
+                  newWeathers.splice(index, 1);
+                }
+              }
             });
+
+            setWeather(newWeathers);
+
+            if (newlyActivatedSpecials.length > 0) {
+              setTimeout(() => {
+                newlyActivatedSpecials.forEach((name) => {
+                  playSound(`⚡ Special Weather: ${name}`);
+                });
+              }, 0);
+            }
           }
         } catch (error) {
           console.error("Failed to parse WebSocket message:", error);
