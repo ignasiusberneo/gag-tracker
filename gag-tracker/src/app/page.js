@@ -243,7 +243,7 @@ export default function Home() {
           {/* Tab Panels */}
           {tabIndex === 0 && (
             <>
-              <Box display={"flex"} alignItems={"stretch"} gap={2} p={2} mb={2}>
+              <Box display={"flex"} alignItems={"stretch"} gap={2} mb={2}>
                 <Box
                   display={"flex"}
                   flex={1}
