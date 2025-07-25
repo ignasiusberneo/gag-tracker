@@ -120,12 +120,15 @@ export default function Home() {
 
           if (data.gear_stock) {
             setTools(data.gear_stock);
-            const specialTools = ["godly_sprinkler", "master_sprinkler"];
+            const specialTools = ["master_sprinkler"];
             const filteredTools = data.gear_stock.filter((tool) =>
               specialTools.includes(tool.item_id)
             );
             if (filteredTools.length > 0) {
-              playSound("🛠️ Rare Gear(s) Available!");
+              playSound(
+                "🛠️ Rare Gear(s) Available!",
+                filteredTools[0].display_name
+              );
             }
           }
 
