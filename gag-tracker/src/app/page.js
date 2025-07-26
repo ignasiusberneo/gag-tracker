@@ -75,6 +75,7 @@ export default function Home() {
               "sugar_apple",
               "burning_bud",
               "giant_pinecone",
+              "elder_strawberry",
             ];
             const filteredStocks = data.seed_stock.filter((stock) =>
               specialStock.includes(stock.item_id)
