@@ -15,6 +15,9 @@ export default function Home() {
   const [userId, setUserId] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
 
+  const JSTUDIO_KEY =
+    "js_6438836af263e65c623cb48f7237a025b23a5c9cf420d396877c61ca4e90d64f";
+
   useEffect(() => {
     const unixMillis = Date.now();
     setUserId(unixMillis.toString());
@@ -30,7 +33,12 @@ export default function Home() {
       ws = new WebSocket(
         `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
           userId
-        )}`
+        )}`,
+        {
+          headers: {
+            "jstudio-key": JSTUDIO_KEY,
+          },
+        }
       );
 
       const playSound = (title = "", message = "Rare Item!") => {
