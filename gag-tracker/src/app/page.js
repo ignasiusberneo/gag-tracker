@@ -33,13 +33,18 @@ export default function Home() {
       ws = new WebSocket(
         `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
           userId
-        )}`,
-        {
-          headers: {
-            "jstudio-key": JSTUDIO_KEY,
-          },
-        }
+        )}`
       );
+      // ws = new WebSocket(
+      //   `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
+      //     userId
+      //   )}`,
+      //   {
+      //     headers: {
+      //       "jstudio-key": JSTUDIO_KEY,
+      //     },
+      //   }
+      // );
 
       const playSound = (title = "", message = "Rare Item!") => {
         const audio = new Audio("/sounds/notification.mp3");
