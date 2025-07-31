@@ -12,16 +12,11 @@ export default function Home() {
   const [tools, setTools] = useState([]);
   const [weather, setWeather] = useState("");
   const [enabled, setEnabled] = useState(false);
-  const [userId, setUserId] = useState("");
+
   const [tabIndex, setTabIndex] = useState(0);
 
   const JSTUDIO_KEY =
     "js_6438836af263e65c623cb48f7237a025b23a5c9cf420d396877c61ca4e90d64f";
-
-  useEffect(() => {
-    const unixMillis = Date.now();
-    setUserId(unixMillis.toString());
-  }, []);
 
   useEffect(() => {
     if (!enabled) return;
@@ -31,20 +26,8 @@ export default function Home() {
 
     const connectWebSocket = () => {
       ws = new WebSocket(
-        `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
-          userId
-        )}&jstudio-key=${encodeURIComponent(JSTUDIO_KEY)}`
+        `wss://websocket.joshlei.com/growagarden?jstudio-key=${JSTUDIO_KEY}`
       );
-      // ws = new WebSocket(
-      //   `wss://websocket.joshlei.com/growagarden?user_id=${encodeURIComponent(
-      //     userId
-      //   )}`,
-      //   {
-      //     headers: {
-      //       "jstudio-key": JSTUDIO_KEY,
-      //     },
-      //   }
-      // );
 
       const playSound = (title = "", message = "Rare Item!") => {
         const audio = new Audio("/sounds/notification.mp3");
@@ -134,7 +117,7 @@ export default function Home() {
 
           if (data.gear_stock) {
             setTools(data.gear_stock);
-            const specialTools = ["master_sprinkler"];
+            const specialTools = ["master_sprinkler", "godly_sprinkler"];
             const filteredTools = data.gear_stock.filter((tool) =>
               specialTools.includes(tool.item_id)
             );
