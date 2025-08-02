@@ -117,7 +117,7 @@ export default function Home() {
 
           if (data.gear_stock) {
             setTools(data.gear_stock);
-            const specialTools = ["master_sprinkler", "godly_sprinkler"];
+            const specialTools = ["master_sprinkler", "grandmaster_sprinkler"];
             const filteredTools = data.gear_stock.filter((tool) =>
               specialTools.includes(tool.item_id)
             );
