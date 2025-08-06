@@ -136,28 +136,33 @@ export default function Home() {
             );
             if (activeWeather.length > 0) {
               const specialWeather = [
-                "disco",
+                "acidrain",
+                "alieninvasion",
+                "armageddon",
                 "auroraborealis",
                 "beenado",
-                "beestorm",
                 "beeswarm",
+                "beestorm",
+                "blackhole",
+                "crystalbeams",
+                "disco",
+                "drought",
                 "heatwave",
                 "jandelfloat",
-                "jandelzombie",
                 "jandelstorm",
-                "meteorshower",
+                "jandelzombie",
                 "meteorstrike",
+                "meteorshower",
+                "radioactivecarrot",
+                "solareclipse",
                 "solarflare",
                 "spacetravel",
                 "sungod",
                 "thunderstorm",
                 "volcano",
                 "workingbeeswarm",
-                "frost",
-                "blackhole",
-                "alieninvasion",
-                "zenaura",
               ];
+
               const filteredWeather = activeWeather.filter((weather) =>
                 specialWeather.includes(weather.weather_id)
               );
