@@ -65,15 +65,7 @@ export default function Home() {
 
           if (data.seed_stock) {
             setStocks(data.seed_stock);
-            const specialStock = [
-              "beanstalk",
-              "ember_lily",
-              "sugar_apple",
-              "burning_bud",
-              "giant_pinecone",
-              "elder_strawberry",
-              "romanesco",
-            ];
+            const specialStock = ["coconut", "dragon_fruit"];
             const filteredStocks = data.seed_stock.filter((stock) =>
               specialStock.includes(stock.item_id)
             );
@@ -104,7 +96,7 @@ export default function Home() {
 
             setEggStock(mergedStock);
 
-            const specialEggs = ["mythical_egg", "paradise_egg", "bug_egg"];
+            const specialEggs = ["bug_egg"];
             const filteredEggs = mergedStock.filter((egg) =>
               specialEggs.includes(egg.item_id)
             );
@@ -118,7 +110,12 @@ export default function Home() {
 
           if (data.gear_stock) {
             setTools(data.gear_stock);
-            const specialTools = ["master_sprinkler", "grandmaster_sprinkler"];
+            const specialTools = [
+              "master_sprinkler",
+              "grandmaster_sprinkler",
+              "friendship_pot",
+              "levelup_lollipop",
+            ];
             const filteredTools = data.gear_stock.filter((tool) =>
               specialTools.includes(tool.item_id)
             );
@@ -137,30 +134,9 @@ export default function Home() {
             if (activeWeather.length > 0) {
               const specialWeather = [
                 "acidrain",
-                "alieninvasion",
-                "armageddon",
-                "auroraborealis",
-                "beenado",
-                "beeswarm",
-                "beestorm",
-                "blackhole",
-                "crystalbeams",
-                "disco",
-                "drought",
-                "heatwave",
-                "jandelfloat",
-                "jandelstorm",
-                "jandelzombie",
-                "meteorstrike",
-                "meteorshower",
-                "radioactivecarrot",
-                "solareclipse",
-                "solarflare",
-                "spacetravel",
-                "sungod",
-                "thunderstorm",
-                "volcano",
-                "workingbeeswarm",
+                "gale",
+                "windstruck",
+                "tornado",
               ];
 
               const filteredWeather = activeWeather.filter((weather) =>
