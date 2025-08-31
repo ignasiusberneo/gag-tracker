@@ -65,7 +65,12 @@ export default function Home() {
 
           if (data.seed_stock) {
             setStocks(data.seed_stock);
-            const specialStock = ["coconut", "dragon_fruit"];
+            const specialStock = [
+              "coconut",
+              "dragon_fruit",
+              "watermelon",
+              "pumpkin",
+            ];
             const filteredStocks = data.seed_stock.filter((stock) =>
               specialStock.includes(stock.item_id)
             );
