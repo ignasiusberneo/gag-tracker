@@ -70,6 +70,7 @@ export default function Home() {
               "dragon_fruit",
               "watermelon",
               "pumpkin",
+              "mushroom",
             ];
             const filteredStocks = data.seed_stock.filter((stock) =>
               specialStock.includes(stock.item_id)
@@ -118,7 +119,6 @@ export default function Home() {
             const specialTools = [
               "master_sprinkler",
               "grandmaster_sprinkler",
-              "friendship_pot",
               "levelup_lollipop",
             ];
             const filteredTools = data.gear_stock.filter((tool) =>
@@ -137,12 +137,7 @@ export default function Home() {
               (weather) => weather.active
             );
             if (activeWeather.length > 0) {
-              const specialWeather = [
-                "acidrain",
-                "gale",
-                "windstruck",
-                "tornado",
-              ];
+              const specialWeather = ["acidrain"];
 
               const filteredWeather = activeWeather.filter((weather) =>
                 specialWeather.includes(weather.weather_id)
