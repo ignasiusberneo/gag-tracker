@@ -137,7 +137,7 @@ export default function Home() {
               (weather) => weather.active
             );
             if (activeWeather.length > 0) {
-              const specialWeather = ["acidrain"];
+              const specialWeather = ["acidrain", "tornado"];
 
               const filteredWeather = activeWeather.filter((weather) =>
                 specialWeather.includes(weather.weather_id)
