@@ -65,7 +65,7 @@ export default function Home() {
 
           if (data.seed_stock) {
             setStocks(data.seed_stock);
-            const specialStock = ["coconut", "dragon_fruit", "mushroom"];
+            const specialStock = ["mushroom"];
             const filteredStocks = data.seed_stock.filter((stock) =>
               specialStock.includes(stock.item_id)
             );
@@ -131,7 +131,7 @@ export default function Home() {
               (weather) => weather.active
             );
             if (activeWeather.length > 0) {
-              const specialWeather = ["acidrain", "earthquake"];
+              const specialWeather = ["earthquake"];
 
               const filteredWeather = activeWeather.filter((weather) =>
                 specialWeather.includes(weather.weather_id)
